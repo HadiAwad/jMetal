@@ -23,7 +23,7 @@ public class GenerationalGeneticAlgorithm<S extends Solution<?>> extends Abstrac
   private Comparator<S> comparator;
   private int maxEvaluations;
   private int evaluations;
-  private double bestSolution = 21282;
+  private double bestSolution = -1024.0 ;
   private double cuurentSolution = Double.MAX_VALUE;
 
   private SolutionListEvaluator<S> evaluator;
@@ -48,7 +48,7 @@ public class GenerationalGeneticAlgorithm<S extends Solution<?>> extends Abstrac
   }
 
   @Override protected boolean isStoppingConditionReached() {
-    boolean result =  (cuurentSolution<= bestSolution)|| (evaluations >= maxEvaluations);
+    boolean result =  (cuurentSolution<= bestSolution) || (evaluations >= maxEvaluations);
   if(result){
     JMetalLogger.logger.info("cuurentSolution: " + cuurentSolution );
   }

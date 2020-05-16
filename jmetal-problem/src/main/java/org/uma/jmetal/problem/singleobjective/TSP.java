@@ -17,7 +17,7 @@ public class TSP extends AbstractIntegerPermutationProblem {
   private int         numberOfCities ;
   private double [][] distanceMatrix ;
 
-  /**
+  /**"/tspInstances/kroA100.tsp"
    * Creates a new TSP problem instance
    */
   public TSP(String distanceFile) throws IOException {

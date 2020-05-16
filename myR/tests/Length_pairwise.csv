@@ -1,0 +1,4 @@
+.y.,group1,group2,n1,n2,statistic,p,p.adj,p.adj.signif
+MLength,M_IBEA,IBEA,46,46,980,1.56e-08,4.68e-08,****
+MLength,M_IBEA,NSGAII,46,46,262,0.029,0.087,ns
+MLength,IBEA,NSGAII,46,46,22.5,3.61e-08,1.08e-07,****

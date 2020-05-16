@@ -7,6 +7,7 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
 import org.uma.jmetal.util.solutionattribute.impl.StrengthRawFitness;
 
@@ -49,6 +50,7 @@ public class SPEA2<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, Li
 
   @Override
   protected void updateProgress() {
+    JMetalLogger.logger.info("PEAS : "+iterations);
     iterations++;
   }
 

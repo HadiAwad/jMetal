@@ -1,0 +1,9 @@
+algorithm,CUT,Size,Length,MutationScore,Coverage,Covered_Goals,Total_Goals,Total_Time,BranchCoverage,ETime
+Algorithm1,class1,9,41,0.502857143,1,21,22,5738,0.95,1
+Algorithm1,class2,10,32,0.405555556,1,24,24,4386,1,2
+Algorithm2,class1,9,41,0.502857143,1,21,22,5738,0.95,1
+Algorithm2,class2,10,32,0.405555556,1,24,24,4386,1,2
+Algorithm1,class1,9,41,0.502857143,1,21,22,5738,0.95,1
+Algorithm1,class2,10,32,0.405555556,1,24,24,4386,1,2
+Algorithm2,class1,9,41,0.502857143,1,21,22,5738,0.95,1
+Algorithm2,class2,10,32,0.405555556,1,24,24,4386,1,2

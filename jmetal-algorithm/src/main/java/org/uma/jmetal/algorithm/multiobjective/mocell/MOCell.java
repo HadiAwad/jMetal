@@ -6,6 +6,7 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.archive.BoundedArchive;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
@@ -79,6 +80,7 @@ public class MOCell<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
   protected void updateProgress() {
     evaluations++;
     currentIndividual=(currentIndividual+1)%getMaxPopulationSize();
+    //JMetalLogger.logger.info("MOCELL : "+evaluations);
   }
 
   @Override

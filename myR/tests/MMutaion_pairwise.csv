@@ -1,0 +1,4 @@
+.y.,group1,group2,n1,n2,statistic,p,p.adj,p.adj.signif
+MMutaion,M_IBEA,IBEA,46,46,771,1.05e-05,3.15e-05,****
+MMutaion,M_IBEA,NSGAII,46,46,324,0.505,1,ns
+MMutaion,IBEA,NSGAII,46,46,111,3.57e-05,0.000107,***

@@ -62,7 +62,7 @@ public class IBEARunner extends AbstractAlgorithmRunner {
 
     selection = new BinaryTournamentSelection<DoubleSolution>() ;
 
-    algorithm = new IBEABuilder(problem)
+    algorithm = new IBEABuilder(problem,crossover,mutation)
       .setArchiveSize(100)
       .setPopulationSize(100)
       .setMaxEvaluations(25000)

@@ -7,7 +7,7 @@ import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
 
-import java.io.File;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -71,9 +71,23 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result>  {
                     ", run: " + runId +
                     ", funFile: " + funFile);
 
-
+    long initTime = System.currentTimeMillis();
     algorithm.run();
+    long estimatedTime = System.currentTimeMillis() - initTime;
+
+    JMetalLogger.logger.info(
+            " Running algorithm: " + algorithmTag +
+                    ", problem: " + problemTag +
+                    ", run: " + runId +
+                    ", funFile: " + funFile + "*** TIME : " +estimatedTime);
     Result population = algorithm.getResult();
+    String timeFile =    experimentData.getExperimentBaseDirectory()
+            + "/data/Time.csv";
+
+    synchronized (this){
+      writeToFile(timeFile,String.valueOf(estimatedTime));
+      writeToFile(timeFile,String.valueOf(estimatedTime));
+    }
 
     new SolutionListOutput((List<S>) population)
             .setSeparator("\t")
@@ -97,4 +111,32 @@ public class ExperimentAlgorithm<S extends Solution<?>, Result>  {
   public String getReferenceParetoFront() { return referenceParetoFront; }
 
   public int getRunId() { return this.runId;}
+
+  public void writeToFile (String fileNAme, String...values){
+    File file = new File(fileNAme);
+    if (! (file.exists() && file.isFile())) {
+      try {
+        file.createNewFile();
+      } catch (IOException e) {
+        e.printStackTrace();
+        JMetalLogger.logger.severe("**Creating " + file + " failed");
+      }
+    }
+    try {
+      FileWriter fr = new FileWriter(file, true);
+      BufferedWriter br = new BufferedWriter(fr);
+      PrintWriter pr = new PrintWriter(br,true);
+      String str = algorithmTag+","+runId+","+problemTag+","+values[0];
+      for (int i = 1; i <values.length ; i++) {
+        str+=","+values[i];
+      }
+      pr.println(str);
+      pr.close();
+      br.close();
+      fr.close();
+    } catch (IOException e) {
+      JMetalLogger.logger.severe("**FileWriter " + file + " failed");
+      e.printStackTrace();
+    }
+  }
 }

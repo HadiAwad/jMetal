@@ -6,4 +6,6 @@ package org.uma.jmetal.solution;
  * @author Antonio J. Nebro <antonio@lcc.uma.es>
  */
 public interface PermutationSolution<T> extends Solution<T> {
+
+
 }

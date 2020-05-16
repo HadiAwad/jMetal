@@ -49,17 +49,13 @@ public class ZDTScalabilityIStudy {
   private static final int INDEPENDENT_RUNS = 25;
 
   public static void main(String[] args) throws IOException {
-    if (args.length != 1) {
-      throw new JMetalException("Needed arguments: experimentBaseDirectory");
-    }
-    String experimentBaseDirectory = args[0];
+
+    String experimentBaseDirectory = "smalltest";
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new ZDT1(10), "ZDT110"));
     problemList.add(new ExperimentProblem<>(new ZDT1(20), "ZDT120"));
     problemList.add(new ExperimentProblem<>(new ZDT1(30), "ZDT130"));
-    problemList.add(new ExperimentProblem<>(new ZDT1(40), "ZDT140"));
-    problemList.add(new ExperimentProblem<>(new ZDT1(50), "ZDT150"));
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
         configureAlgorithmList(problemList);
 
@@ -74,20 +70,17 @@ public class ZDTScalabilityIStudy {
             .setIndicatorList(Arrays.asList(
                 new Epsilon<DoubleSolution>(),
                 new Spread<DoubleSolution>(),
-                new GenerationalDistance<DoubleSolution>(),
-                new PISAHypervolume<DoubleSolution>(),
-                new InvertedGenerationalDistance<DoubleSolution>(),
                 new InvertedGenerationalDistancePlus<DoubleSolution>()))
             .setIndependentRuns(INDEPENDENT_RUNS)
-            .setNumberOfCores(8)
+            .setNumberOfCores(4)
             .build();
 
     new ExecuteAlgorithms<>(experiment).run();
-    new ComputeQualityIndicators<>(experiment).run();
-    new GenerateLatexTablesWithStatistics(experiment).run();
-    new GenerateWilcoxonTestTablesWithR<>(experiment).run();
+   // new ComputeQualityIndicators<>(experiment).run();
+   //new GenerateLatexTablesWithStatistics(experiment).run();
+    //new GenerateWilcoxonTestTablesWithR<>(experiment).run();
     new GenerateFriedmanTestTables<>(experiment).run();
-    new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).run();
+   // new GenerateBoxplotsWithR<>(experiment).setRows(3).setColumns(3).run();
   }
 
   /**

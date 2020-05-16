@@ -6,6 +6,7 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.solutionattribute.impl.Fitness;
@@ -110,6 +111,7 @@ public class IBEA<S extends Solution<?>> implements Algorithm<List<S>> {
         //problem.evaluateConstraints(offSpring[0]);
         offSpringSolutionSet.add(offspring.get(0));
         evaluations++;
+        //JMetalLogger.logger.info("IBEA : "+evaluations);
       }
       solutionSet = offSpringSolutionSet;
     }

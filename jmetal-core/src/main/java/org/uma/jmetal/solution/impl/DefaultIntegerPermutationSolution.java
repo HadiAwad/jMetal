@@ -56,4 +56,5 @@ public class DefaultIntegerPermutationSolution
   public DefaultIntegerPermutationSolution copy() {
     return new DefaultIntegerPermutationSolution(this);
   }
+
 }

@@ -1,0 +1,4 @@
+.y.,group1,group2,n1,n2,statistic,p,p.adj,p.adj.signif
+MBranchCoverage,M_IBEA,IBEA,46,46,666,1.75e-07,5.25e-07,****
+MBranchCoverage,M_IBEA,NSGAII,46,46,23,0.002,0.007,**
+MBranchCoverage,IBEA,NSGAII,46,46,0,2.59e-07,7.77e-07,****

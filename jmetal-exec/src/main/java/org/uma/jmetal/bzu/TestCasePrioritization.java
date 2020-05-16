@@ -5,6 +5,7 @@ import org.uma.jmetal.bzu.coverage.CoverageMatrix;
 import org.uma.jmetal.bzu.coverage.ExecutionCostVector;
 import org.uma.jmetal.problem.impl.AbstractIntegerPermutationProblem;
 import org.uma.jmetal.solution.PermutationSolution;
+import org.uma.jmetal.util.JMetalLogger;
 
 import java.io.IOException;
 
@@ -12,15 +13,28 @@ public class TestCasePrioritization extends AbstractIntegerPermutationProblem {
 
     private int numberOfTestCases;
     private ExecutionCostVector executionCostVector = null;
-    private CoverageMatrix coverageMatrix;
+    private ExecutionCostVector onlyOneCostMatrix = null;
+    private CoverageMatrix faultCoverageMatrix;
+    private CoverageMatrix branchCoverageMatrix;
 
-    public TestCasePrioritization(String distanceFolder) throws IOException {
-        executionCostVector = new ExecutionCostVector(distanceFolder+"/cost1.csv");
-        coverageMatrix = new CoverageMatrix(distanceFolder+"/past_faults.csv");
+    public TestCasePrioritization(String distanceFolder,boolean costUnified) throws IOException {
+        //executionCostVector = new ExecutionCostVector(distanceFolder+"/cost.csv");
+        //onlyOneCostMatrix = new ExecutionCostVector(distanceFolder+"/cost1.csv");
+
+        if(costUnified){
+            JMetalLogger.logger.info("COST1 is used ");
+            executionCostVector = new ExecutionCostVector(distanceFolder+"/cost1.csv");
+        }else{
+            JMetalLogger.logger.info("Real COST is used ");
+            executionCostVector = new ExecutionCostVector(distanceFolder+"/cost.csv");
+        }
+
+        faultCoverageMatrix = new CoverageMatrix(distanceFolder+"/past_faults.csv");
+        branchCoverageMatrix = new CoverageMatrix(distanceFolder+"/coverage.csv");
         numberOfTestCases = executionCostVector.size();
 
         setNumberOfVariables(numberOfTestCases);
-        setNumberOfObjectives(1);
+        setNumberOfObjectives(2);
         setName("TestCasePrioritization");
     }
 
@@ -30,18 +44,12 @@ public class TestCasePrioritization extends AbstractIntegerPermutationProblem {
 
     @Override
     public void evaluate(PermutationSolution<Integer> solution) {
-        double fitness = AveragePercentageCoverage.calculate(solution,coverageMatrix,executionCostVector);
-        double F=1/(1+fitness);
-        System.out.println(fitness+"-"+F);
-        solution.setObjective(0,  -1.0 *fitness);
+        double faultFitness = AveragePercentageCoverage.calculate(solution, faultCoverageMatrix,executionCostVector);
+        double branchFitness = AveragePercentageCoverage.calculate(solution, branchCoverageMatrix,executionCostVector);
+        //System.out.println("evaluate " +faultFitness +"---"+ branchFitness );
+        solution.setObjective(0,  -1.0 *faultFitness);
+        solution.setObjective(1,  -1.0 *branchFitness);
     }
 
-    public Integer getUpperBound(int index) {
-        return numberOfTestCases;
-    }
-
-    public Integer getLowerBound(int index) {
-        return 0;
-    }
 
 }

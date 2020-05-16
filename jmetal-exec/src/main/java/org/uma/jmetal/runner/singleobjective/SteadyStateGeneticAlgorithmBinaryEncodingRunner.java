@@ -1,7 +1,9 @@
 package org.uma.jmetal.runner.singleobjective;
 
 import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GenerationalGeneticAlgorithm;
 import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.GeneticAlgorithmBuilder;
+import org.uma.jmetal.algorithm.singleobjective.geneticalgorithm.SteadyStateGeneticAlgorithm;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
@@ -11,6 +13,7 @@ import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.problem.singleobjective.OneMax;
 import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
@@ -46,7 +49,7 @@ public class SteadyStateGeneticAlgorithmBinaryEncodingRunner {
 
     algorithm = new GeneticAlgorithmBuilder<>(problem, crossover, mutation)
         .setPopulationSize(50)
-        .setMaxEvaluations(25000)
+        .setMaxEvaluations(100000)
         .setSelectionOperator(selection)
         .setVariant(GeneticAlgorithmBuilder.GeneticAlgorithmVariant.STEADY_STATE)
         .build() ;
@@ -62,15 +65,17 @@ public class SteadyStateGeneticAlgorithmBinaryEncodingRunner {
 
     new SolutionListOutput(population)
             .setSeparator("\t")
-            .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-            .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
             .print();
 
     JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
-    JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
-    JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
+
 
     JMetalLogger.logger.info("Fitness: " + solution.getObjective(0)) ;
     JMetalLogger.logger.info("Solution: " + solution.getVariableValueString(0)) ;
+    int evaluations = ((SteadyStateGeneticAlgorithm) algorithm).getNumberOfEvaluations();
+    JMetalLogger.logger.info("Evaluation: " + evaluations) ;
+    long count = solution.getVariableValueString(0).chars().filter(ch -> ch == '1').count();
+    JMetalLogger.logger.info("count: " + count) ;
+
   }
 }

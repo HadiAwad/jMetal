@@ -7,6 +7,7 @@ import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.operator.impl.selection.RankingAndCrowdingSelection;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 import org.uma.jmetal.util.evaluator.SolutionListEvaluator;
@@ -60,6 +61,7 @@ public class NSGAII<S extends Solution<?>> extends AbstractGeneticAlgorithm<S, L
 
   @Override protected void updateProgress() {
     evaluations += getMaxPopulationSize() ;
+//    JMetalLogger.logger.info("NSGA-2 : "+evaluations);
   }
 
   @Override protected boolean isStoppingConditionReached() {

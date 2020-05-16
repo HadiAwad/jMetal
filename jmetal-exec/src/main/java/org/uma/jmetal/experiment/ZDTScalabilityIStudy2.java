@@ -49,10 +49,8 @@ public class ZDTScalabilityIStudy2 {
   private static final int INDEPENDENT_RUNS = 25;
 
   public static void main(String[] args) throws IOException {
-    if (args.length != 1) {
-      throw new JMetalException("Needed arguments: experimentBaseDirectory");
-    }
-    String experimentBaseDirectory = args[0];
+
+    String experimentBaseDirectory = "testmytest";
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new ZDT1(10), "ZDT110"));

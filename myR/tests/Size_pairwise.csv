@@ -1,0 +1,4 @@
+.y.,group1,group2,n1,n2,statistic,p,p.adj,p.adj.signif
+MSize,M_IBEA,IBEA,46,46,657,3.56e-07,1.07e-06,****
+MSize,M_IBEA,NSGAII,46,46,52.5,0.014,0.043,*
+MSize,IBEA,NSGAII,46,46,6,2.85e-07,8.55e-07,****

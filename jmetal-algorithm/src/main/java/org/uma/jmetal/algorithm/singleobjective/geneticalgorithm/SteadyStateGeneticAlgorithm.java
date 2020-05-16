@@ -6,6 +6,7 @@ import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.operator.SelectionOperator;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
 
 import java.util.ArrayList;
@@ -22,12 +23,15 @@ public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends Abstract
   private int maxEvaluations;
   private int evaluations;
 
+  private double bestSolution = -1024.0 ;
+  private double cuurentSolution = Double.MAX_VALUE;
+
   /**
    * Constructor
    */
   public SteadyStateGeneticAlgorithm(Problem<S> problem, int maxEvaluations, int populationSize,
-      CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
-      SelectionOperator<List<S>, S> selectionOperator) {
+                                     CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator,
+                                     SelectionOperator<List<S>, S> selectionOperator) {
     super(problem);
     setMaxPopulationSize(populationSize);
     this.maxEvaluations = maxEvaluations;
@@ -40,7 +44,11 @@ public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends Abstract
   }
 
   @Override protected boolean isStoppingConditionReached() {
-    return (evaluations >= maxEvaluations);
+    boolean result =  (cuurentSolution<= bestSolution) || (evaluations >= maxEvaluations);
+    if(result){
+      JMetalLogger.logger.info("cuurentSolution: " + cuurentSolution );
+    }
+    return result;
   }
 
   @Override protected List<S> replacement(List<S> population, List<S> offspringPopulation) {
@@ -96,6 +104,7 @@ public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends Abstract
   }
 
   @Override public void updateProgress() {
+    cuurentSolution = this.getResult().getObjective(0);
     evaluations++;
   }
 
@@ -105,5 +114,9 @@ public class SteadyStateGeneticAlgorithm<S extends Solution<?>> extends Abstract
 
   @Override public String getDescription() {
     return "Steady-State Genetic Algorithm" ;
+  }
+
+  public int getNumberOfEvaluations(){
+    return evaluations;
   }
 }
